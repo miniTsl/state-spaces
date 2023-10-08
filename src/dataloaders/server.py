@@ -1,8 +1,9 @@
+import os
 import torch
 import pandas as pd
 import random
 from torch.utils.data import Dataset
-from src.dataloaders.base import default_data_path, SequenceDataset
+from src.dataloaders.base import SequenceDataset
 
 
 class ServerTrain(Dataset):
@@ -28,6 +29,7 @@ class ServerTest(Dataset):
         return len(self.x)
 
 class Server(SequenceDataset):
+
     _name_ = "Server"
     # l_output = 0
     # L = 784
@@ -40,9 +42,15 @@ class Server(SequenceDataset):
             "seed": 42,  # For train/val split
         }
 
-    def setup(self):
+    def setup(self, history=2, horizon=1, ratio=0.9):
         # self.data_dir = self.data_dir or default_data_path / self._name_
-        self.data_dir = "./data.csv"
+        # get the absolute path of the .data.csv file inside this folder
+        file_path = "data.csv"
+        self.data_dir = os.path.abspath(__file__)
+        # print(self.data_dir)
+        self.data_dir = os.path.join(os.path.dirname(self.data_dir), file_path)
+        # print(self.data_dir)
+
 
         # read data from csv file
         data = pd.read_csv(self.data_dir)
@@ -51,9 +59,6 @@ class Server(SequenceDataset):
         data = torch.tensor(data['_value'].values, dtype=torch.float32)
 
         # get data pair from data in the size of (history + horizon) into a list data_pair
-        history = 2
-        horizon = 1
-        ratio = 0.9
         self.d_input = history
         self.d_output = horizon
         data_pair = []
@@ -68,17 +73,15 @@ class Server(SequenceDataset):
         print(len(train_data), len(test_data))
 
         # seperate train_data into train_x and train_y
-        train_x = torch.tensor([i[0:history] for i in train_data], dtype=torch.float32)
-        train_y = torch.tensor([i[history:] for i in train_data], dtype=torch.float32)
+        train_x = [i[0:history] for i in train_data]
+        train_y = [i[history:] for i in train_data]
 
         # seperate test_data into test_x and test_y
-        test_x = torch.tensor([i[0:history] for i in test_data], dtype=torch.float32)
-        test_y = torch.tensor([i[history:] for i in test_data], dtype=torch.float32)
+        test_x = [i[0:history] for i in test_data]
+        test_y = [i[history:] for i in test_data]
 
         self.dataset_train = ServerTrain(train_x, train_y)
         self.dataset_test = ServerTest(test_x, test_y)
-
-
 
         # transform_list = [
         #     torchvision.transforms.ToTensor(),
@@ -111,10 +114,16 @@ class Server(SequenceDataset):
     def __str__(self):
         return f"{'p' if self.permute else 's'}{self._name_}"
     
+
+
 if __name__ == "__main__":
-    server = Server()
-    server.setup()
-    # print server info in form like, info_name: info
+
+    server = Server(_name_="Server")
+    history = 2
+    horizon = 1
+    ratio = 0.9
+    server.setup(history, horizon, ratio)
+
     print(server.data_dir)
     print(server.dataset_train)
     print(server.dataset_test)
@@ -122,8 +131,6 @@ if __name__ == "__main__":
     print(server.dataset_test[0])
     print(server.d_input)
     print(server.d_output)
-    print(server.L)
-    print(server.l_output)
     print(server.dataset_train[0][0].shape)
     print(server.dataset_train[0][1].shape)
     print(server.dataset_test[0][0].shape)

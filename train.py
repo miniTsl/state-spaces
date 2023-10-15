@@ -135,10 +135,8 @@ class SequenceLightningModule(pl.LightningModule):
         self.dataset = SequenceDataset.registry[self.hparams.dataset._name_](
             **self.hparams.dataset
         )
-
         # Check hparams
         self._check_config()
-
         # PL has some bugs, so add hooks and make sure they're only called once
         self._has_setup = False
 
@@ -177,7 +175,7 @@ class SequenceLightningModule(pl.LightningModule):
         # Instantiate the task
         self.task = utils.instantiate(
             tasks.registry, self.hparams.task, dataset=self.dataset, model=self.model
-        )
+        )  
 
         # Create encoders and decoders
         encoder = encoders.instantiate(
@@ -297,11 +295,22 @@ class SequenceLightningModule(pl.LightningModule):
         else:
             assert len(z) == 1 and isinstance(z[0], dict), "Dataloader must return dictionary of extra arguments"
             z = z[0]
-
+   
         x, w = self.encoder(x, **z) # w can model-specific constructions such as key_padding_mask for transformers or state for RNNs
+        # print("line 301 after encoder:")
+        # print(x.shape)
+
         x, state = self.model(x, **w, state=self._state)
         self._state = state
+
+        # print("line 307 after model:")
+        # print(x.shape)
         x, w = self.decoder(x, state=state, **z)
+
+        # print("line 311 after decoder:")
+        # print(x.shape)
+
+
         return x, y, w
 
     def step(self, x_t):
@@ -319,6 +328,10 @@ class SequenceLightningModule(pl.LightningModule):
         self._process_state(batch, batch_idx, train=(prefix == "train"))
 
         x, y, w = self.forward(batch)
+
+        # # print("y_shape: ", y.shape)
+        # print("flatten y_hat: ", x.flatten())
+        # print("flatten y_true", y.flatten())
 
         # Loss
         if prefix == 'train':

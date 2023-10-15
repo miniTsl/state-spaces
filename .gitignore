@@ -120,3 +120,7 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/python
+
+
+train_output_input50/
+train_output_input200/

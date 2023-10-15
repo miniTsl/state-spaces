@@ -77,6 +77,14 @@ class SequenceDecoder(Decoder):
             l_output = self.l_output
             squeeze = self.squeeze
 
+        # print(self.l_output)    # 10
+        # print(self.squeeze) # False
+        # print(self.use_lengths) # False
+        # print(lengths)  # None
+        # print(self.output_transform)    # D_model --> d_output
+        # print("x.shape: \n", x.shape)  # B, l_seq, D_model
+        
+
         if self.mode == "last":
             restrict = lambda x: x[..., -l_output:, :]
         elif self.mode == "first":
@@ -91,15 +99,23 @@ class SequenceDecoder(Decoder):
 
             def restrict(x):
                 L = x.size(-2)
+                # print(L)    # 50
                 s = x.sum(dim=-2, keepdim=True)
+                # print(s.shape)  # 50,1,256
                 if l_output > 1:
                     c = torch.cumsum(x[..., -(l_output - 1) :, :].flip(-2), dim=-2)
+                    # print(c.shape)  # B, l_output-1,D_model
                     c = F.pad(c, (0, 0, 1, 0))
+                    # print(c.shape)  # B, l_output, D_model
                     s = s - c  # (B, l_output, D)
+                    # print(s.shape)  # B, l_output, D_model
                     s = s.flip(-2)
                 denom = torch.arange(
                     L - l_output + 1, L + 1, dtype=x.dtype, device=x.device
                 )
+
+                # 需要在l_output维度上做除法，因此需要在最后增加一个d_ouput的维度
+                denom = denom.unsqueeze(-1)
                 s = s / denom
                 return s
 

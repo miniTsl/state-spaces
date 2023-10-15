@@ -467,12 +467,18 @@ def _instantiate(encoder, dataset=None, model=None):
     else:
         name = encoder["_name_"]
 
+    # print(dataset)
+    # print(dataset_attrs.get(name, []))
+    # print(dataset.d_input)
+
     # Extract dataset/model arguments from attribute names
     dataset_args = utils.config.extract_attrs_from_obj(
         dataset, *dataset_attrs.get(name, [])
     )
     model_args = utils.config.extract_attrs_from_obj(model, *model_attrs.get(name, []))
-
+    # print(dataset_args)
+    # print(model_args)
+    
     # Instantiate encoder
     obj = utils.instantiate(registry, encoder, *dataset_args, *model_args)
     return obj

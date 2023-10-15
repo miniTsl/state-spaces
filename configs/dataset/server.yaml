@@ -1,0 +1,7 @@
+_name_: server
+permute: none
+val_split: 0.1
+seed: 42
+__l_max: 200
+forecast_horizon: 1
+prediction_window: 50

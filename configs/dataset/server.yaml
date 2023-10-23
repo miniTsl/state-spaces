@@ -1,7 +1,8 @@
 _name_: server
 permute: none
-val_split: 0.1
+val_split: 0.1  # 训练数据中有多少比例拿出来作为验证集
 seed: 42
-__l_max: 200
+# __l_max: 200
 forecast_horizon: 1
-prediction_window: 50
+prediction_window: 300
+train_ratio: 0.9  # 所有数据中有多少比例拿出来作为训练集

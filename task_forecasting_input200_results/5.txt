@@ -1,0 +1,703 @@
+CONFIG
+├── train
+│   └── seed: 0                                                                                                                                                                                                              
+│       name: null                                                                                                                                                                                                           
+│       interval: epoch                                                                                                                                                                                                      
+│       monitor: val/loss                                                                                                                                                                                                    
+│       mode: min                                                                                                                                                                                                            
+│       ema: 0.0                                                                                                                                                                                                             
+│       test: false                                                                                                                                                                                                          
+│       debug: false                                                                                                                                                                                                         
+│       ignore_warnings: false                                                                                                                                                                                               
+│       state:                                                                                                                                                                                                               
+│         mode: null                                                                                                                                                                                                         
+│         n_context: 0                                                                                                                                                                                                       
+│         n_context_eval: 0                                                                                                                                                                                                  
+│       ckpt: null                                                                                                                                                                                                           
+│       optimizer_param_grouping:                                                                                                                                                                                            
+│         bias_weight_decay: false                                                                                                                                                                                           
+│         normalization_weight_decay: false                                                                                                                                                                                  
+│       disable_dataset: false                                                                                                                                                                                               
+│       validate_at_start: false                                                                                                                                                                                             
+│       pretrained_model_path: null                                                                                                                                                                                          
+│       pretrained_model_strict_load: true                                                                                                                                                                                   
+│       pretrained_model_state_hook:                                                                                                                                                                                         
+│         _name_: null                                                                                                                                                                                                       
+│       post_init_hook:                                                                                                                                                                                                      
+│         _name_: null                                                                                                                                                                                                       
+│       layer_decay:                                                                                                                                                                                                         
+│         _name_: null                                                                                                                                                                                                       
+│         decay: 0.7                                                                                                                                                                                                         
+│       track_grad_norms: false                                                                                                                                                                                              
+│                                                                                                                                                                                                                            
+├── tolerance
+│   └── logdir: ./resume                                                                                                                                                                                                     
+│       id: null                                                                                                                                                                                                             
+│                                                                                                                                                                                                                            
+├── wandb
+│   └── None                                                                                                                                                                                                                 
+├── trainer
+│   └── accelerator: gpu                                                                                                                                                                                                     
+│       strategy: auto                                                                                                                                                                                                       
+│       devices: 1                                                                                                                                                                                                           
+│       accumulate_grad_batches: 1                                                                                                                                                                                           
+│       max_epochs: 500                                                                                                                                                                                                      
+│       gradient_clip_val: null                                                                                                                                                                                              
+│       log_every_n_steps: 10                                                                                                                                                                                                
+│       limit_train_batches: 1.0                                                                                                                                                                                             
+│       limit_val_batches: 1.0                                                                                                                                                                                               
+│       enable_model_summary: false                                                                                                                                                                                          
+│                                                                                                                                                                                                                            
+├── loader
+│   └── batch_size: 50                                                                                                                                                                                                       
+│       num_workers: 4                                                                                                                                                                                                       
+│       pin_memory: true                                                                                                                                                                                                     
+│       drop_last: true                                                                                                                                                                                                      
+│                                                                                                                                                                                                                            
+├── dataset
+│   └── _name_: server                                                                                                                                                                                                       
+│       permute: none                                                                                                                                                                                                        
+│       val_split: 0.1                                                                                                                                                                                                       
+│       seed: 42                                                                                                                                                                                                             
+│       forecast_horizon: 5                                                                                                                                                                                                  
+│       prediction_window: 200                                                                                                                                                                                               
+│                                                                                                                                                                                                                            
+├── task
+│   └── _name_: forecasting                                                                                                                                                                                                  
+│       loss: mae                                                                                                                                                                                                            
+│       metrics: null                                                                                                                                                                                                        
+│                                                                                                                                                                                                                            
+├── optimizer
+│   └── _name_: adamw                                                                                                                                                                                                        
+│       lr: 0.001                                                                                                                                                                                                            
+│       weight_decay: 0.0                                                                                                                                                                                                    
+│       betas:                                                                                                                                                                                                               
+│       - 0.9                                                                                                                                                                                                                
+│       - 0.999                                                                                                                                                                                                              
+│                                                                                                                                                                                                                            
+├── scheduler
+│   └── _name_: plateau                                                                                                                                                                                                      
+│       mode: min                                                                                                                                                                                                            
+│       factor: 0.2                                                                                                                                                                                                          
+│       patience: 20                                                                                                                                                                                                         
+│       min_lr: 0.0                                                                                                                                                                                                          
+│                                                                                                                                                                                                                            
+├── encoder
+│   └── linear                                                                                                                                                                                                               
+├── decoder
+│   └── _name_: sequence                                                                                                                                                                                                     
+│       mode: pool                                                                                                                                                                                                           
+│                                                                                                                                                                                                                            
+├── model
+│   └── layer:                                                                                                                                                                                                               
+│         _name_: s4                                                                                                                                                                                                         
+│         d_state: 64                                                                                                                                                                                                        
+│         channels: 1                                                                                                                                                                                                        
+│         bidirectional: false                                                                                                                                                                                               
+│         gate: null                                                                                                                                                                                                         
+│         gate_act: id                                                                                                                                                                                                       
+│         bottleneck: null                                                                                                                                                                                                   
+│         activation: gelu                                                                                                                                                                                                   
+│         mult_act: null                                                                                                                                                                                                     
+│         final_act: glu                                                                                                                                                                                                     
+│         postact: null                                                                                                                                                                                                      
+│         initializer: null                                                                                                                                                                                                  
+│         weight_norm: false                                                                                                                                                                                                 
+│         tie_dropout: true                                                                                                                                                                                                  
+│         layer: fftconv                                                                                                                                                                                                     
+│         mode: nplr                                                                                                                                                                                                         
+│         init: legs                                                                                                                                                                                                         
+│         measure: null                                                                                                                                                                                                      
+│         rank: 1                                                                                                                                                                                                            
+│         dt_min: 0.001                                                                                                                                                                                                      
+│         dt_max: 0.1                                                                                                                                                                                                        
+│         dt_transform: softplus                                                                                                                                                                                             
+│         lr:                                                                                                                                                                                                                
+│           dt: 0.001                                                                                                                                                                                                        
+│           A: 0.001                                                                                                                                                                                                         
+│           B: 0.001                                                                                                                                                                                                         
+│         wd: 0.0                                                                                                                                                                                                            
+│         n_ssm: 1                                                                                                                                                                                                           
+│         drop_kernel: 0.0                                                                                                                                                                                                   
+│         deterministic: false                                                                                                                                                                                               
+│         l_max: 200                                                                                                                                                                                                         
+│         verbose: true                                                                                                                                                                                                      
+│       _name_: model                                                                                                                                                                                                        
+│       prenorm: true                                                                                                                                                                                                        
+│       transposed: false                                                                                                                                                                                                    
+│       n_layers: 4                                                                                                                                                                                                          
+│       d_model: 256                                                                                                                                                                                                         
+│       bidirectional: false                                                                                                                                                                                                 
+│       residual: R                                                                                                                                                                                                          
+│       pool:                                                                                                                                                                                                                
+│         _name_: pool                                                                                                                                                                                                       
+│         stride: 1                                                                                                                                                                                                          
+│         expand: null                                                                                                                                                                                                       
+│       norm: layer                                                                                                                                                                                                          
+│       dropout: 0.0                                                                                                                                                                                                         
+│       tie_dropout: true                                                                                                                                                                                                    
+│       track_norms: true                                                                                                                                                                                                    
+│       encoder: null                                                                                                                                                                                                        
+│       decoder: null                                                                                                                                                                                                        
+│                                                                                                                                                                                                                            
+└── callbacks
+    └── learning_rate_monitor:                                                                                                                                                                                               
+          logging_interval: epoch                                                                                                                                                                                            
+        timer:                                                                                                                                                                                                               
+          step: true                                                                                                                                                                                                         
+          inter_step: false                                                                                                                                                                                                  
+          epoch: true                                                                                                                                                                                                        
+          val: true                                                                                                                                                                                                          
+        params:                                                                                                                                                                                                              
+          total: true                                                                                                                                                                                                        
+          trainable: true                                                                                                                                                                                                    
+          fixed: true                                                                                                                                                                                                        
+        model_checkpoint:                                                                                                                                                                                                    
+          monitor: val/loss                                                                                                                                                                                                  
+          mode: min                                                                                                                                                                                                          
+          save_top_k: 1                                                                                                                                                                                                      
+          save_last: true                                                                                                                                                                                                    
+          dirpath: checkpoints/                                                                                                                                                                                              
+          filename: val/loss                                                                                                                                                                                                 
+          auto_insert_metric_name: false                                                                                                                                                                                     
+          verbose: true                                                                                                                                                                                                      
+        rich_model_summary:                                                                                                                                                                                                  
+          max_depth: 1                                                                                                                                                                                                       
+        rich_progress_bar:                                                                                                                                                                                                   
+          refresh_rate: 1                                                                                                                                                                                                    
+          leave: true                                                                                                                                                                                                        
+                                                                                                                                                                                                                             
+[2023-10-15 20:33:11,471][__main__][INFO] - Instantiating callback <src.callbacks.timer.Timer>
+[2023-10-15 20:33:11,475][__main__][INFO] - Instantiating callback <src.callbacks.params.ParamsLog>
+[2023-10-15 20:33:11,477][__main__][INFO] - Instantiating callback <pytorch_lightning.callbacks.ModelCheckpoint>
+[2023-10-15 20:33:11,480][__main__][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichModelSummary>
+[2023-10-15 20:33:11,483][__main__][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichProgressBar>
+[2023-10-15 20:33:11,682][src.models.sequence.kernels.ssm][INFO] - CUDA extension for structured kernels (Cauchy and Vandermonde multiplication) found.
+[2023-10-15 20:33:14,067][src.models.sequence.kernels.ssm][INFO] - Constructing S4 (H, N, L) = (256, 32, 200)
+[2023-10-15 20:33:15,963][src.models.sequence.kernels.ssm][INFO] - Constructing S4 (H, N, L) = (256, 32, 200)
+[2023-10-15 20:33:17,681][src.models.sequence.kernels.ssm][INFO] - Constructing S4 (H, N, L) = (256, 32, 200)
+[2023-10-15 20:33:19,773][src.models.sequence.kernels.ssm][INFO] - Constructing S4 (H, N, L) = (256, 32, 200)
+Log Transform False
+Hyperparameter groups [{}, {'weight_decay': 0.0}, {'lr': 0.001, 'weight_decay': 0.0}]
+[2023-10-15 20:33:21,105][__main__][INFO] - Optimizer group 0 | 12 tensors | 526081 parameters | lr 0.001 | weight_decay 0.0
+[2023-10-15 20:33:21,105][__main__][INFO] - Optimizer group 1 | 4 tensors | 65536 parameters | lr 0.001 | weight_decay 0.0
+[2023-10-15 20:33:21,105][__main__][INFO] - Optimizer group 2 | 14 tensors | 4608 parameters | lr 0.001 | weight_decay 0.0
+[2023-10-15 20:33:21,110][__main__][INFO] - Optimizer group 3 | 20 tensors | 1792 parameters | lr 0.001 | weight_decay 0.0
+┏━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━┓
+┃   ┃ Name    ┃ Type          ┃ Params ┃
+┡━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━┩
+│ 0 │ model   │ SequenceModel │  597 K │
+│ 1 │ encoder │ Sequential    │    512 │
+│ 2 │ decoder │ Sequential    │    257 │
+└───┴─────────┴───────────────┴────────┘
+Trainable params: 598 K                                                                                                                                                                                                      
+Non-trainable params: 0                                                                                                                                                                                                      
+Total params: 598 K                                                                                                                                                                                                          
+Total estimated model params size (MB): 2                                                                                                                                                                                    
+[2023-10-15 20:33:21,460][__main__][INFO] - Loaded 'val' dataloader:          371 examples |      7 steps
+[2023-10-15 20:33:21,460][__main__][INFO] - Loaded 'test' dataloader:         412 examples |      8 steps
+[2023-10-15 20:33:23,252][src.models.sequence.kernels.ssm][INFO] - S4: Initializing kernel to length 200
+[2023-10-15 20:33:23,393][src.models.sequence.kernels.ssm][INFO] - S4: Initializing kernel to length 200
+[2023-10-15 20:33:23,398][src.models.sequence.kernels.ssm][INFO] - S4: Initializing kernel to length 200
+[2023-10-15 20:33:23,402][src.models.sequence.kernels.ssm][INFO] - S4: Initializing kernel to length 200
+[2023-10-15 20:33:23,666][__main__][INFO] - Loaded 'train' dataloader:       3333 examples |     66 steps
+Epoch 0/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.19it/s v_num: 0 trainer/loss: 37.391 trainer/epoch: 0.0 val/loss: 30.206 test/loss: 31.665 train/loss: 60.321 
+Epoch 1/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 26.103 trainer/epoch: 1.0 val/loss: 23.019 test/loss: 24.641 train/loss: 28.397 
+Epoch 2/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.07it/s v_num: 0 trainer/loss: 24.257 trainer/epoch: 2.0 val/loss: 23.089 test/loss: 22.748 train/loss: 23.151 
+Epoch 3/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 14.772 trainer/epoch: 3.0 val/loss: 18.851 test/loss: 18.636 train/loss: 21.091 
+Epoch 4/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.01it/s v_num: 0 trainer/loss: 25.371 trainer/epoch: 4.0 val/loss: 18.828 test/loss: 18.082 train/loss: 19.314 
+Epoch 5/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.05it/s v_num: 0 trainer/loss: 16.553 trainer/epoch: 5.0 val/loss: 18.014 test/loss: 17.387 train/loss: 19.848 
+Epoch 6/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 17.095 trainer/epoch: 6.0 val/loss: 18.113 test/loss: 17.293 train/loss: 18.489 
+Epoch 7/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.04it/s v_num: 0 trainer/loss: 26.226 trainer/epoch: 7.0 val/loss: 20.367 test/loss: 20.117 train/loss: 19.662 
+Epoch 8/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 17.094 trainer/epoch: 8.0 val/loss: 18.375 test/loss: 17.859 train/loss: 18.707 
+Epoch 9/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.01it/s v_num: 0 trainer/loss: 21.992 trainer/epoch: 9.0 val/loss: 17.295 test/loss: 16.315 train/loss: 17.932 
+Epoch 10/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.02it/s v_num: 0 trainer/loss: 19.944 trainer/epoch: 10.0 val/loss: 17.115 test/loss: 16.413 train/loss: 18.143 
+Epoch 11/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 18.906 trainer/epoch: 11.0 val/loss: 17.923 test/loss: 17.453 train/loss: 17.622 
+Epoch 12/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.01it/s v_num: 0 trainer/loss: 18.399 trainer/epoch: 12.0 val/loss: 17.227 test/loss: 16.605 train/loss: 17.974 
+Epoch 13/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 19.881 trainer/epoch: 13.0 val/loss: 16.903 test/loss: 16.175 train/loss: 17.416 
+Epoch 14/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 18.39 trainer/epoch: 14.0 val/loss: 16.949 test/loss: 16.264 train/loss: 16.974 
+Epoch 15/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 21.017 trainer/epoch: 15.0 val/loss: 17.68 test/loss: 16.52 train/loss: 17.379 
+Epoch 16/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 17.054 trainer/epoch: 16.0 val/loss: 17.501 test/loss: 16.976 train/loss: 17.302 
+Epoch 17/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 19.478 trainer/epoch: 17.0 val/loss: 16.42 test/loss: 15.627 train/loss: 16.896 
+Epoch 18/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 15.583 trainer/epoch: 18.0 val/loss: 17.508 test/loss: 16.31 train/loss: 17.23 
+Epoch 19/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 15.671 trainer/epoch: 19.0 val/loss: 16.718 test/loss: 15.987 train/loss: 16.874 
+Epoch 20/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 17.236 trainer/epoch: 20.0 val/loss: 16.715 test/loss: 15.856 train/loss: 17.122 
+Epoch 21/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.71it/s v_num: 0 trainer/loss: 17.286 trainer/epoch: 21.0 val/loss: 16.947 test/loss: 15.894 train/loss: 17.246 
+Epoch 22/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 21.242 trainer/epoch: 22.0 val/loss: 18.37 test/loss: 17.099 train/loss: 16.811 
+Epoch 23/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 16.582 trainer/epoch: 23.0 val/loss: 16.41 test/loss: 15.537 train/loss: 16.633 
+Epoch 24/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 21.089 trainer/epoch: 24.0 val/loss: 16.619 test/loss: 16.039 train/loss: 16.434 
+Epoch 25/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 15.91 trainer/epoch: 25.0 val/loss: 16.699 test/loss: 15.703 train/loss: 17.042 
+Epoch 26/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 19.196 trainer/epoch: 26.0 val/loss: 15.878 test/loss: 15.01 train/loss: 16.406 
+Epoch 27/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 15.547 trainer/epoch: 27.0 val/loss: 15.84 test/loss: 14.838 train/loss: 16.308 
+Epoch 28/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 14.22 trainer/epoch: 28.0 val/loss: 16.064 test/loss: 15.309 train/loss: 16.36 
+Epoch 29/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 14.695 trainer/epoch: 29.0 val/loss: 16.738 test/loss: 15.959 train/loss: 16.2 
+Epoch 30/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 14.54 trainer/epoch: 30.0 val/loss: 15.747 test/loss: 14.756 train/loss: 16.414 
+Epoch 31/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 15.06 trainer/epoch: 31.0 val/loss: 16.297 test/loss: 15.744 train/loss: 16.101 
+Epoch 32/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 16.961 trainer/epoch: 32.0 val/loss: 16.95 test/loss: 15.782 train/loss: 15.681 
+Epoch 33/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 15.079 trainer/epoch: 33.0 val/loss: 15.873 test/loss: 14.991 train/loss: 15.729 
+Epoch 34/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 18.523 trainer/epoch: 34.0 val/loss: 16.034 test/loss: 15.098 train/loss: 15.821 
+Epoch 35/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.02it/s v_num: 0 trainer/loss: 16.811 trainer/epoch: 35.0 val/loss: 17.536 test/loss: 16.27 train/loss: 15.941 
+Epoch 36/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.73it/s v_num: 0 trainer/loss: 14.817 trainer/epoch: 36.0 val/loss: 14.978 test/loss: 14.078 train/loss: 15.479 
+Epoch 37/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 16.373 trainer/epoch: 37.0 val/loss: 15.139 test/loss: 14.317 train/loss: 15.179 
+Epoch 38/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 14.173 trainer/epoch: 38.0 val/loss: 15.564 test/loss: 14.495 train/loss: 15.286 
+Epoch 39/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 20.227 trainer/epoch: 39.0 val/loss: 14.887 test/loss: 13.903 train/loss: 15.089 
+Epoch 40/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 11.352 trainer/epoch: 40.0 val/loss: 14.731 test/loss: 13.744 train/loss: 15.402 
+Epoch 41/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 15.477 trainer/epoch: 41.0 val/loss: 14.668 test/loss: 13.694 train/loss: 14.717 
+Epoch 42/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 15.379 trainer/epoch: 42.0 val/loss: 14.803 test/loss: 13.622 train/loss: 15.122 
+Epoch 43/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 13.289 trainer/epoch: 43.0 val/loss: 14.838 test/loss: 13.868 train/loss: 14.987 
+Epoch 44/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 10.849 trainer/epoch: 44.0 val/loss: 14.769 test/loss: 13.698 train/loss: 14.211 
+Epoch 45/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 15.664 trainer/epoch: 45.0 val/loss: 15.53 test/loss: 14.688 train/loss: 14.375 
+Epoch 46/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 16.264 trainer/epoch: 46.0 val/loss: 14.037 test/loss: 12.981 train/loss: 14.221 
+Epoch 47/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 13.014 trainer/epoch: 47.0 val/loss: 14.264 test/loss: 13.324 train/loss: 14.063 
+Epoch 48/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 10.166 trainer/epoch: 48.0 val/loss: 14.241 test/loss: 13.281 train/loss: 14.032 
+Epoch 49/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 9.696 trainer/epoch: 49.0 val/loss: 14.206 test/loss: 13.48 train/loss: 13.705 
+Epoch 50/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 12.849 trainer/epoch: 50.0 val/loss: 13.641 test/loss: 12.563 train/loss: 13.539 
+Epoch 51/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.72it/s v_num: 0 trainer/loss: 12.182 trainer/epoch: 51.0 val/loss: 13.899 test/loss: 12.821 train/loss: 13.352 
+Epoch 52/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 13.014 trainer/epoch: 52.0 val/loss: 14.26 test/loss: 13.127 train/loss: 13.37 
+Epoch 53/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 13.207 trainer/epoch: 53.0 val/loss: 13.717 test/loss: 12.761 train/loss: 13.444 
+Epoch 54/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 14.693 trainer/epoch: 54.0 val/loss: 13.333 test/loss: 12.302 train/loss: 13.195 
+Epoch 55/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 13.139 trainer/epoch: 55.0 val/loss: 13.428 test/loss: 12.44 train/loss: 12.757 
+Epoch 56/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 12.15 trainer/epoch: 56.0 val/loss: 13.345 test/loss: 12.299 train/loss: 13.051 
+Epoch 57/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 14.931 trainer/epoch: 57.0 val/loss: 13.142 test/loss: 12.465 train/loss: 12.916 
+Epoch 58/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 10.488 trainer/epoch: 58.0 val/loss: 13.006 test/loss: 12.218 train/loss: 12.902 
+Epoch 59/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 10.485 trainer/epoch: 59.0 val/loss: 12.947 test/loss: 11.978 train/loss: 12.266 
+Epoch 60/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 13.338 trainer/epoch: 60.0 val/loss: 12.915 test/loss: 12.242 train/loss: 12.753 
+Epoch 61/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 14.969 trainer/epoch: 61.0 val/loss: 12.981 test/loss: 12.184 train/loss: 12.096 
+Epoch 62/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 11.805 trainer/epoch: 62.0 val/loss: 12.991 test/loss: 12.131 train/loss: 12.088 
+Epoch 63/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 11.77 trainer/epoch: 63.0 val/loss: 12.52 test/loss: 11.661 train/loss: 11.91 
+Epoch 64/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 9.657 trainer/epoch: 64.0 val/loss: 12.374 test/loss: 11.667 train/loss: 11.831 
+Epoch 65/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 11.051 trainer/epoch: 65.0 val/loss: 12.566 test/loss: 11.874 train/loss: 12.064 
+Epoch 66/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 11.338 trainer/epoch: 66.0 val/loss: 12.383 test/loss: 11.627 train/loss: 11.717 
+Epoch 67/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 10.762 trainer/epoch: 67.0 val/loss: 12.682 test/loss: 11.894 train/loss: 11.519 
+Epoch 68/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 10.878 trainer/epoch: 68.0 val/loss: 12.78 test/loss: 12.363 train/loss: 11.724 
+Epoch 69/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 11.163 trainer/epoch: 69.0 val/loss: 12.105 test/loss: 11.629 train/loss: 11.731 
+Epoch 70/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 10.27 trainer/epoch: 70.0 val/loss: 11.967 test/loss: 11.283 train/loss: 11.288 
+Epoch 71/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 11.355 trainer/epoch: 71.0 val/loss: 13.262 test/loss: 12.457 train/loss: 11.422 
+Epoch 72/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 8.658 trainer/epoch: 72.0 val/loss: 11.783 test/loss: 11.23 train/loss: 11.77 
+Epoch 73/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 12.433 trainer/epoch: 73.0 val/loss: 11.73 test/loss: 10.934 train/loss: 11.179 
+Epoch 74/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 11.735 trainer/epoch: 74.0 val/loss: 11.565 test/loss: 10.883 train/loss: 11.022 
+Epoch 75/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 11.963 trainer/epoch: 75.0 val/loss: 12.082 test/loss: 11.374 train/loss: 10.753 
+Epoch 76/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.73it/s v_num: 0 trainer/loss: 10.485 trainer/epoch: 76.0 val/loss: 11.35 test/loss: 10.829 train/loss: 11.244 
+Epoch 77/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 10.653 trainer/epoch: 77.0 val/loss: 12.926 test/loss: 12.462 train/loss: 11.053 
+Epoch 78/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 10.425 trainer/epoch: 78.0 val/loss: 11.37 test/loss: 10.748 train/loss: 10.975 
+Epoch 79/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 10.304 trainer/epoch: 79.0 val/loss: 11.37 test/loss: 10.78 train/loss: 10.568 
+Epoch 80/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 8.308 trainer/epoch: 80.0 val/loss: 11.347 test/loss: 10.745 train/loss: 10.456 
+Epoch 81/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.73it/s v_num: 0 trainer/loss: 9.125 trainer/epoch: 81.0 val/loss: 12.803 test/loss: 12.284 train/loss: 10.612 
+Epoch 82/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 9.399 trainer/epoch: 82.0 val/loss: 11.496 test/loss: 10.93 train/loss: 11.256 
+Epoch 83/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.71it/s v_num: 0 trainer/loss: 10.369 trainer/epoch: 83.0 val/loss: 11.628 test/loss: 10.924 train/loss: 10.516 
+Epoch 84/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 11.45 trainer/epoch: 84.0 val/loss: 12.517 test/loss: 11.781 train/loss: 10.319 
+Epoch 85/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 12.658 trainer/epoch: 85.0 val/loss: 11.118 test/loss: 10.537 train/loss: 10.729 
+Epoch 86/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 10.745 trainer/epoch: 86.0 val/loss: 11.992 test/loss: 11.409 train/loss: 10.382 
+Epoch 87/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 9.353 trainer/epoch: 87.0 val/loss: 11.567 test/loss: 10.995 train/loss: 10.214 
+Epoch 88/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 10.231 trainer/epoch: 88.0 val/loss: 10.834 test/loss: 10.311 train/loss: 9.759 
+Epoch 89/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 8.433 trainer/epoch: 89.0 val/loss: 11.177 test/loss: 10.72 train/loss: 9.892 
+Epoch 90/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 9.732 trainer/epoch: 90.0 val/loss: 11.873 test/loss: 11.331 train/loss: 10.023 
+Epoch 91/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 13.17 trainer/epoch: 91.0 val/loss: 10.748 test/loss: 10.128 train/loss: 9.782 
+Epoch 92/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 10.829 trainer/epoch: 92.0 val/loss: 10.639 test/loss: 10.094 train/loss: 9.841 
+Epoch 93/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 9.265 trainer/epoch: 93.0 val/loss: 10.481 test/loss: 9.904 train/loss: 9.576 
+Epoch 94/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 9.85 trainer/epoch: 94.0 val/loss: 10.355 test/loss: 9.961 train/loss: 9.412 
+Epoch 95/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 9.824 trainer/epoch: 95.0 val/loss: 10.31 test/loss: 9.689 train/loss: 9.467 
+Epoch 96/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.72it/s v_num: 0 trainer/loss: 10.032 trainer/epoch: 96.0 val/loss: 10.378 test/loss: 9.827 train/loss: 9.372 
+Epoch 97/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 9.475 trainer/epoch: 97.0 val/loss: 10.735 test/loss: 10.212 train/loss: 9.321 
+Epoch 98/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 10.018 trainer/epoch: 98.0 val/loss: 10.386 test/loss: 9.731 train/loss: 9.211 
+Epoch 99/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 9.846 trainer/epoch: 99.0 val/loss: 10.764 test/loss: 10.177 train/loss: 9.322 
+Epoch 100/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 9.228 trainer/epoch: 100.0 val/loss: 10.265 test/loss: 9.708 train/loss: 9.451 
+Epoch 101/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.58it/s v_num: 0 trainer/loss: 8.215 trainer/epoch: 101.0 val/loss: 9.822 test/loss: 9.415 train/loss: 9.158 
+Epoch 102/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 10.652 trainer/epoch: 102.0 val/loss: 10.717 test/loss: 10.32 train/loss: 9.878 
+Epoch 103/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 10.484 trainer/epoch: 103.0 val/loss: 9.628 test/loss: 9.202 train/loss: 9.392 
+Epoch 104/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 10.47 trainer/epoch: 104.0 val/loss: 9.452 test/loss: 8.956 train/loss: 8.527 
+Epoch 105/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 9.166 trainer/epoch: 105.0 val/loss: 9.342 test/loss: 9.131 train/loss: 8.355 
+Epoch 106/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 9.652 trainer/epoch: 106.0 val/loss: 9.251 test/loss: 8.838 train/loss: 8.391 
+Epoch 107/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 8.88 trainer/epoch: 107.0 val/loss: 9.054 test/loss: 8.774 train/loss: 8.181 
+Epoch 108/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 7.889 trainer/epoch: 108.0 val/loss: 9.299 test/loss: 8.807 train/loss: 8.434 
+Epoch 109/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 8.091 trainer/epoch: 109.0 val/loss: 9.188 test/loss: 8.75 train/loss: 8.091 
+Epoch 110/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 10.859 trainer/epoch: 110.0 val/loss: 9.34 test/loss: 8.907 train/loss: 8.179 
+Epoch 111/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.72it/s v_num: 0 trainer/loss: 9.593 trainer/epoch: 111.0 val/loss: 9.157 test/loss: 8.754 train/loss: 8.101 
+Epoch 112/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 7.76 trainer/epoch: 112.0 val/loss: 9.425 test/loss: 9.152 train/loss: 8.059 
+Epoch 113/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 8.776 trainer/epoch: 113.0 val/loss: 9.508 test/loss: 9.203 train/loss: 8.485 
+Epoch 114/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 6.855 trainer/epoch: 114.0 val/loss: 8.97 test/loss: 8.573 train/loss: 7.808 
+Epoch 115/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 6.691 trainer/epoch: 115.0 val/loss: 9.645 test/loss: 9.394 train/loss: 7.933 
+Epoch 116/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.71it/s v_num: 0 trainer/loss: 7.041 trainer/epoch: 116.0 val/loss: 8.607 test/loss: 8.131 train/loss: 7.845 
+Epoch 117/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 6.725 trainer/epoch: 117.0 val/loss: 8.691 test/loss: 8.197 train/loss: 7.592 
+Epoch 118/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 5.948 trainer/epoch: 118.0 val/loss: 8.597 test/loss: 8.054 train/loss: 7.557 
+Epoch 119/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 6.638 trainer/epoch: 119.0 val/loss: 8.638 test/loss: 8.067 train/loss: 7.402 
+Epoch 120/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 7.519 trainer/epoch: 120.0 val/loss: 8.634 test/loss: 8.22 train/loss: 7.226 
+Epoch 121/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.70it/s v_num: 0 trainer/loss: 7.395 trainer/epoch: 121.0 val/loss: 8.981 test/loss: 8.602 train/loss: 7.301 
+Epoch 122/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 7.196 trainer/epoch: 122.0 val/loss: 9.734 test/loss: 9.329 train/loss: 7.001 
+Epoch 123/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 6.715 trainer/epoch: 123.0 val/loss: 8.181 test/loss: 8.124 train/loss: 7.175 
+Epoch 124/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 7.259 trainer/epoch: 124.0 val/loss: 9.129 test/loss: 8.505 train/loss: 6.838 
+Epoch 125/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 7.35 trainer/epoch: 125.0 val/loss: 7.787 test/loss: 7.59 train/loss: 6.765 
+Epoch 126/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.74it/s v_num: 0 trainer/loss: 8.389 trainer/epoch: 126.0 val/loss: 8.496 test/loss: 8.085 train/loss: 7.207 
+Epoch 127/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 6.808 trainer/epoch: 127.0 val/loss: 7.544 test/loss: 7.226 train/loss: 6.759 
+Epoch 128/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 6.788 trainer/epoch: 128.0 val/loss: 7.573 test/loss: 7.297 train/loss: 6.547 
+Epoch 129/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 6.806 trainer/epoch: 129.0 val/loss: 7.935 test/loss: 7.745 train/loss: 6.787 
+Epoch 130/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 5.625 trainer/epoch: 130.0 val/loss: 7.33 test/loss: 7.189 train/loss: 6.621 
+Epoch 131/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 7.853 trainer/epoch: 131.0 val/loss: 8.387 test/loss: 8.134 train/loss: 6.582 
+Epoch 132/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 7.791 trainer/epoch: 132.0 val/loss: 8.391 test/loss: 7.971 train/loss: 7.015 
+Epoch 133/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 6.992 trainer/epoch: 133.0 val/loss: 7.85 test/loss: 7.351 train/loss: 6.709 
+Epoch 134/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 5.385 trainer/epoch: 134.0 val/loss: 7.226 test/loss: 6.958 train/loss: 6.335 
+Epoch 135/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 5.568 trainer/epoch: 135.0 val/loss: 7.36 test/loss: 7.194 train/loss: 6.078 
+Epoch 136/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 5.448 trainer/epoch: 136.0 val/loss: 7.838 test/loss: 7.804 train/loss: 6.308 
+Epoch 137/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 6.014 trainer/epoch: 137.0 val/loss: 6.894 test/loss: 6.534 train/loss: 5.922 
+Epoch 138/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 5.643 trainer/epoch: 138.0 val/loss: 6.746 test/loss: 6.596 train/loss: 5.895 
+Epoch 139/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 8.594 trainer/epoch: 139.0 val/loss: 6.784 test/loss: 6.681 train/loss: 6.062 
+Epoch 140/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 6.111 trainer/epoch: 140.0 val/loss: 6.787 test/loss: 6.848 train/loss: 5.85 
+Epoch 141/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 4.612 trainer/epoch: 141.0 val/loss: 6.429 test/loss: 6.62 train/loss: 6.014 
+Epoch 142/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.02it/s v_num: 0 trainer/loss: 6.053 trainer/epoch: 142.0 val/loss: 6.709 test/loss: 6.602 train/loss: 5.925 
+Epoch 143/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.71it/s v_num: 0 trainer/loss: 5.722 trainer/epoch: 143.0 val/loss: 7.166 test/loss: 6.963 train/loss: 5.833 
+Epoch 144/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 5.787 trainer/epoch: 144.0 val/loss: 6.891 test/loss: 7.022 train/loss: 5.741 
+Epoch 145/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 5.399 trainer/epoch: 145.0 val/loss: 7.135 test/loss: 6.914 train/loss: 5.796 
+Epoch 146/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.66it/s v_num: 0 trainer/loss: 5.018 trainer/epoch: 146.0 val/loss: 6.112 test/loss: 6.06 train/loss: 5.556 
+Epoch 147/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 5.666 trainer/epoch: 147.0 val/loss: 6.993 test/loss: 6.853 train/loss: 5.694 
+Epoch 148/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.74it/s v_num: 0 trainer/loss: 4.347 trainer/epoch: 148.0 val/loss: 6.11 test/loss: 6.243 train/loss: 5.632 
+Epoch 149/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 4.676 trainer/epoch: 149.0 val/loss: 6.382 test/loss: 6.175 train/loss: 5.234 
+Epoch 150/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 5.943 trainer/epoch: 150.0 val/loss: 6.111 test/loss: 6.115 train/loss: 5.226 
+Epoch 151/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 5.866 trainer/epoch: 151.0 val/loss: 6.118 test/loss: 5.827 train/loss: 5.27 
+Epoch 152/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 4.256 trainer/epoch: 152.0 val/loss: 6.37 test/loss: 6.337 train/loss: 5.107 
+Epoch 153/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.73it/s v_num: 0 trainer/loss: 5.939 trainer/epoch: 153.0 val/loss: 6.047 test/loss: 6.171 train/loss: 5.148 
+Epoch 154/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 3.584 trainer/epoch: 154.0 val/loss: 5.872 test/loss: 5.8 train/loss: 5.144 
+Epoch 155/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 4.946 trainer/epoch: 155.0 val/loss: 5.848 test/loss: 5.906 train/loss: 5.193 
+Epoch 156/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 4.525 trainer/epoch: 156.0 val/loss: 5.918 test/loss: 5.981 train/loss: 5.055 
+Epoch 157/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 4.046 trainer/epoch: 157.0 val/loss: 5.934 test/loss: 5.705 train/loss: 5.113 
+Epoch 158/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 4.677 trainer/epoch: 158.0 val/loss: 6.647 test/loss: 6.584 train/loss: 5.184 
+Epoch 159/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 4.236 trainer/epoch: 159.0 val/loss: 5.766 test/loss: 5.6 train/loss: 4.969 
+Epoch 160/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 4.739 trainer/epoch: 160.0 val/loss: 5.793 test/loss: 5.48 train/loss: 4.734 
+Epoch 161/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.71it/s v_num: 0 trainer/loss: 5.481 trainer/epoch: 161.0 val/loss: 5.802 test/loss: 5.827 train/loss: 4.791 
+Epoch 162/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 3.793 trainer/epoch: 162.0 val/loss: 5.824 test/loss: 5.82 train/loss: 5.077 
+Epoch 163/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 4.894 trainer/epoch: 163.0 val/loss: 5.616 test/loss: 5.464 train/loss: 4.589 
+Epoch 164/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 3.973 trainer/epoch: 164.0 val/loss: 5.426 test/loss: 5.302 train/loss: 4.582 
+Epoch 165/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 5.298 trainer/epoch: 165.0 val/loss: 6.604 test/loss: 6.854 train/loss: 4.685 
+Epoch 166/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 6.679 trainer/epoch: 166.0 val/loss: 6.836 test/loss: 6.469 train/loss: 5.03 
+Epoch 167/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.00it/s v_num: 0 trainer/loss: 4.392 trainer/epoch: 167.0 val/loss: 5.794 test/loss: 5.839 train/loss: 4.73 
+Epoch 168/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 4.707 trainer/epoch: 168.0 val/loss: 5.104 test/loss: 5.004 train/loss: 4.589 
+Epoch 169/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 4.319 trainer/epoch: 169.0 val/loss: 5.306 test/loss: 5.203 train/loss: 4.17 
+Epoch 170/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 4.777 trainer/epoch: 170.0 val/loss: 5.342 test/loss: 5.262 train/loss: 4.791 
+Epoch 171/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 4.808 trainer/epoch: 171.0 val/loss: 5.37 test/loss: 5.753 train/loss: 4.86 
+Epoch 172/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 6.404 trainer/epoch: 172.0 val/loss: 5.168 test/loss: 5.23 train/loss: 4.61 
+Epoch 173/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 4.256 trainer/epoch: 173.0 val/loss: 4.899 test/loss: 4.824 train/loss: 4.309 
+Epoch 174/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 4.64 trainer/epoch: 174.0 val/loss: 5.346 test/loss: 5.267 train/loss: 4.268 
+Epoch 175/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 5.214 trainer/epoch: 175.0 val/loss: 5.161 test/loss: 5.005 train/loss: 4.342 
+Epoch 176/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 4.578 trainer/epoch: 176.0 val/loss: 5.197 test/loss: 4.976 train/loss: 4.275 
+Epoch 177/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 3.909 trainer/epoch: 177.0 val/loss: 4.884 test/loss: 4.757 train/loss: 4.069 
+Epoch 178/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 4.989 trainer/epoch: 178.0 val/loss: 4.91 test/loss: 5.005 train/loss: 4.095 
+Epoch 179/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 5.152 trainer/epoch: 179.0 val/loss: 5.482 test/loss: 5.268 train/loss: 4.623 
+Epoch 180/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 5.402 trainer/epoch: 180.0 val/loss: 5.396 test/loss: 5.324 train/loss: 4.486 
+Epoch 181/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 4.279 trainer/epoch: 181.0 val/loss: 5.323 test/loss: 5.285 train/loss: 4.641 
+Epoch 182/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 3.672 trainer/epoch: 182.0 val/loss: 4.964 test/loss: 4.717 train/loss: 4.247 
+Epoch 183/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 3.808 trainer/epoch: 183.0 val/loss: 5.05 test/loss: 4.662 train/loss: 4.106 
+Epoch 184/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 4.793 trainer/epoch: 184.0 val/loss: 5.191 test/loss: 5.174 train/loss: 4.401 
+Epoch 185/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 3.576 trainer/epoch: 185.0 val/loss: 5.578 test/loss: 5.393 train/loss: 4.6 
+Epoch 186/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 3.935 trainer/epoch: 186.0 val/loss: 4.795 test/loss: 5.004 train/loss: 4.424 
+Epoch 187/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 3.819 trainer/epoch: 187.0 val/loss: 4.942 test/loss: 5.017 train/loss: 4.034 
+Epoch 188/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 4.907 trainer/epoch: 188.0 val/loss: 5.002 test/loss: 5.23 train/loss: 4.026 
+Epoch 189/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 3.756 trainer/epoch: 189.0 val/loss: 5.268 test/loss: 5.388 train/loss: 3.954 
+Epoch 190/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 4.476 trainer/epoch: 190.0 val/loss: 5.683 test/loss: 5.629 train/loss: 4.048 
+Epoch 191/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 3.923 trainer/epoch: 191.0 val/loss: 4.593 test/loss: 4.551 train/loss: 4.1 
+Epoch 192/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 5.351 trainer/epoch: 192.0 val/loss: 4.872 test/loss: 4.848 train/loss: 3.899 
+Epoch 193/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 4.522 trainer/epoch: 193.0 val/loss: 5.041 test/loss: 4.75 train/loss: 4.3 
+Epoch 194/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 3.634 trainer/epoch: 194.0 val/loss: 4.436 test/loss: 4.338 train/loss: 3.866 
+Epoch 195/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 3.501 trainer/epoch: 195.0 val/loss: 4.682 test/loss: 4.724 train/loss: 3.84 
+Epoch 196/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 4.941 trainer/epoch: 196.0 val/loss: 4.616 test/loss: 4.667 train/loss: 3.945 
+Epoch 197/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 3.631 trainer/epoch: 197.0 val/loss: 4.641 test/loss: 4.75 train/loss: 3.731 
+Epoch 198/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 3.717 trainer/epoch: 198.0 val/loss: 4.501 test/loss: 4.487 train/loss: 3.659 
+Epoch 199/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 3.724 trainer/epoch: 199.0 val/loss: 4.482 test/loss: 4.6 train/loss: 3.795 
+Epoch 200/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 3.826 trainer/epoch: 200.0 val/loss: 4.627 test/loss: 4.806 train/loss: 3.842 
+Epoch 201/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 3.155 trainer/epoch: 201.0 val/loss: 4.404 test/loss: 4.403 train/loss: 3.747 
+Epoch 202/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 3.324 trainer/epoch: 202.0 val/loss: 4.277 test/loss: 4.599 train/loss: 3.827 
+Epoch 203/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 3.618 trainer/epoch: 203.0 val/loss: 4.793 test/loss: 4.949 train/loss: 3.71 
+Epoch 204/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 3.43 trainer/epoch: 204.0 val/loss: 4.392 test/loss: 4.673 train/loss: 3.626 
+Epoch 205/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 3.511 trainer/epoch: 205.0 val/loss: 4.208 test/loss: 4.362 train/loss: 3.928 
+Epoch 206/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 2.707 trainer/epoch: 206.0 val/loss: 5.037 test/loss: 5.138 train/loss: 3.71 
+Epoch 207/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 4.176 trainer/epoch: 207.0 val/loss: 4.339 test/loss: 4.483 train/loss: 3.823 
+Epoch 208/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 4.831 trainer/epoch: 208.0 val/loss: 4.211 test/loss: 4.43 train/loss: 3.895 
+Epoch 209/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 2.902 trainer/epoch: 209.0 val/loss: 4.013 test/loss: 4.356 train/loss: 3.452 
+Epoch 210/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 3.432 trainer/epoch: 210.0 val/loss: 4.486 test/loss: 4.684 train/loss: 3.462 
+Epoch 211/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.74it/s v_num: 0 trainer/loss: 3.582 trainer/epoch: 211.0 val/loss: 3.909 test/loss: 4.179 train/loss: 3.538 
+Epoch 212/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 3.643 trainer/epoch: 212.0 val/loss: 3.764 test/loss: 3.877 train/loss: 3.324 
+Epoch 213/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 2.891 trainer/epoch: 213.0 val/loss: 4.393 test/loss: 4.51 train/loss: 3.787 
+Epoch 214/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 4.883 trainer/epoch: 214.0 val/loss: 4.674 test/loss: 4.867 train/loss: 3.919 
+Epoch 215/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 3.479 trainer/epoch: 215.0 val/loss: 3.701 test/loss: 4.036 train/loss: 3.466 
+Epoch 216/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 3.835 trainer/epoch: 216.0 val/loss: 4.147 test/loss: 4.148 train/loss: 3.555 
+Epoch 217/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 2.532 trainer/epoch: 217.0 val/loss: 3.793 test/loss: 3.999 train/loss: 3.322 
+Epoch 218/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.73it/s v_num: 0 trainer/loss: 3.364 trainer/epoch: 218.0 val/loss: 4.221 test/loss: 4.215 train/loss: 3.305 
+Epoch 219/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 4.114 trainer/epoch: 219.0 val/loss: 3.815 test/loss: 4.01 train/loss: 3.293 
+Epoch 220/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 2.619 trainer/epoch: 220.0 val/loss: 4.088 test/loss: 4.112 train/loss: 3.38 
+Epoch 221/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 2.789 trainer/epoch: 221.0 val/loss: 3.897 test/loss: 4.045 train/loss: 3.366 
+Epoch 222/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 4.246 trainer/epoch: 222.0 val/loss: 4.661 test/loss: 4.658 train/loss: 3.364 
+Epoch 223/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 3.002 trainer/epoch: 223.0 val/loss: 4.018 test/loss: 4.028 train/loss: 3.821 
+Epoch 224/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 3.177 trainer/epoch: 224.0 val/loss: 3.768 test/loss: 4.022 train/loss: 3.23 
+Epoch 225/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 2.513 trainer/epoch: 225.0 val/loss: 3.772 test/loss: 3.772 train/loss: 3.169 
+Epoch 226/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.73it/s v_num: 0 trainer/loss: 3.701 trainer/epoch: 226.0 val/loss: 4.107 test/loss: 4.417 train/loss: 3.779 
+Epoch 227/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 2.9 trainer/epoch: 227.0 val/loss: 3.916 test/loss: 3.957 train/loss: 3.218 
+Epoch 228/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.73it/s v_num: 0 trainer/loss: 2.608 trainer/epoch: 228.0 val/loss: 3.713 test/loss: 3.852 train/loss: 3.1 
+Epoch 229/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 3.411 trainer/epoch: 229.0 val/loss: 3.762 test/loss: 3.99 train/loss: 3.236 
+Epoch 230/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 4.139 trainer/epoch: 230.0 val/loss: 4.143 test/loss: 4.225 train/loss: 3.411 
+Epoch 231/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.69it/s v_num: 0 trainer/loss: 2.786 trainer/epoch: 231.0 val/loss: 4.191 test/loss: 4.247 train/loss: 3.565 
+Epoch 232/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 3.83 trainer/epoch: 232.0 val/loss: 3.747 test/loss: 4.092 train/loss: 3.356 
+Epoch 233/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 2.767 trainer/epoch: 233.0 val/loss: 3.798 test/loss: 3.696 train/loss: 3.356 
+Epoch 234/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 3.62 trainer/epoch: 234.0 val/loss: 4.051 test/loss: 4.043 train/loss: 3.165 
+Epoch 235/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 3.921 trainer/epoch: 235.0 val/loss: 3.962 test/loss: 4.032 train/loss: 3.476 
+Epoch 236/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 3.694 trainer/epoch: 236.0 val/loss: 3.884 test/loss: 3.888 train/loss: 3.423 
+Epoch 237/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 2.023 trainer/epoch: 237.0 val/loss: 2.774 test/loss: 2.949 train/loss: 2.484 
+Epoch 238/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.70it/s v_num: 0 trainer/loss: 1.522 trainer/epoch: 238.0 val/loss: 2.452 test/loss: 2.648 train/loss: 1.78 
+Epoch 239/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 1.564 trainer/epoch: 239.0 val/loss: 2.329 test/loss: 2.516 train/loss: 1.594 
+Epoch 240/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.207 trainer/epoch: 240.0 val/loss: 2.248 test/loss: 2.462 train/loss: 1.51 
+Epoch 241/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 1.623 trainer/epoch: 241.0 val/loss: 2.142 test/loss: 2.361 train/loss: 1.492 
+Epoch 242/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 1.249 trainer/epoch: 242.0 val/loss: 2.181 test/loss: 2.376 train/loss: 1.443 
+Epoch 243/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 1.074 trainer/epoch: 243.0 val/loss: 2.153 test/loss: 2.326 train/loss: 1.398 
+Epoch 244/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 1.249 trainer/epoch: 244.0 val/loss: 2.15 test/loss: 2.33 train/loss: 1.383 
+Epoch 245/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 1.492 trainer/epoch: 245.0 val/loss: 2.128 test/loss: 2.368 train/loss: 1.398 
+Epoch 246/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 2.272 trainer/epoch: 246.0 val/loss: 2.067 test/loss: 2.316 train/loss: 1.414 
+Epoch 247/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 1.1 trainer/epoch: 247.0 val/loss: 2.052 test/loss: 2.275 train/loss: 1.375 
+Epoch 248/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 1.285 trainer/epoch: 248.0 val/loss: 2.188 test/loss: 2.375 train/loss: 1.4 
+Epoch 249/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 1.307 trainer/epoch: 249.0 val/loss: 2.051 test/loss: 2.304 train/loss: 1.482 
+Epoch 250/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 1.465 trainer/epoch: 250.0 val/loss: 2.183 test/loss: 2.408 train/loss: 1.388 
+Epoch 251/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 1.66 trainer/epoch: 251.0 val/loss: 2.115 test/loss: 2.357 train/loss: 1.385 
+Epoch 252/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 1.288 trainer/epoch: 252.0 val/loss: 1.988 test/loss: 2.165 train/loss: 1.439 
+Epoch 253/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.72it/s v_num: 0 trainer/loss: 1.341 trainer/epoch: 253.0 val/loss: 1.904 test/loss: 2.203 train/loss: 1.427 
+Epoch 254/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 1.036 trainer/epoch: 254.0 val/loss: 1.979 test/loss: 2.204 train/loss: 1.333 
+Epoch 255/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 0.9 trainer/epoch: 255.0 val/loss: 1.914 test/loss: 2.113 train/loss: 1.294 
+Epoch 256/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 1.299 trainer/epoch: 256.0 val/loss: 1.896 test/loss: 2.124 train/loss: 1.318 
+Epoch 257/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 2.167 trainer/epoch: 257.0 val/loss: 1.95 test/loss: 2.112 train/loss: 1.312 
+Epoch 258/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 1.241 trainer/epoch: 258.0 val/loss: 2.064 test/loss: 2.266 train/loss: 1.362 
+Epoch 259/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 1.128 trainer/epoch: 259.0 val/loss: 2.013 test/loss: 2.205 train/loss: 1.346 
+Epoch 260/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 1.612 trainer/epoch: 260.0 val/loss: 1.994 test/loss: 2.115 train/loss: 1.356 
+Epoch 261/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.26 trainer/epoch: 261.0 val/loss: 1.97 test/loss: 2.183 train/loss: 1.327 
+Epoch 262/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 1.622 trainer/epoch: 262.0 val/loss: 1.866 test/loss: 2.109 train/loss: 1.354 
+Epoch 263/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 1.29 trainer/epoch: 263.0 val/loss: 1.918 test/loss: 2.058 train/loss: 1.361 
+Epoch 264/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 1.087 trainer/epoch: 264.0 val/loss: 1.86 test/loss: 2.091 train/loss: 1.309 
+Epoch 265/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 1.434 trainer/epoch: 265.0 val/loss: 1.887 test/loss: 2.104 train/loss: 1.286 
+Epoch 266/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 1.238 trainer/epoch: 266.0 val/loss: 1.85 test/loss: 2.062 train/loss: 1.302 
+Epoch 267/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 1.24 trainer/epoch: 267.0 val/loss: 1.815 test/loss: 1.993 train/loss: 1.272 
+Epoch 268/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.878 trainer/epoch: 268.0 val/loss: 1.861 test/loss: 2.076 train/loss: 1.247 
+Epoch 269/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 1.62 trainer/epoch: 269.0 val/loss: 1.87 test/loss: 2.107 train/loss: 1.311 
+Epoch 270/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 0.936 trainer/epoch: 270.0 val/loss: 1.901 test/loss: 2.081 train/loss: 1.241 
+Epoch 271/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.265 trainer/epoch: 271.0 val/loss: 1.947 test/loss: 2.145 train/loss: 1.303 
+Epoch 272/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 1.266 trainer/epoch: 272.0 val/loss: 1.811 test/loss: 1.97 train/loss: 1.328 
+Epoch 273/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.74it/s v_num: 0 trainer/loss: 1.82 trainer/epoch: 273.0 val/loss: 1.812 test/loss: 1.982 train/loss: 1.242 
+Epoch 274/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 1.126 trainer/epoch: 274.0 val/loss: 1.774 test/loss: 1.998 train/loss: 1.24 
+Epoch 275/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 1.279 trainer/epoch: 275.0 val/loss: 1.852 test/loss: 2.106 train/loss: 1.341 
+Epoch 276/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 0.893 trainer/epoch: 276.0 val/loss: 1.818 test/loss: 1.958 train/loss: 1.285 
+Epoch 277/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 1.031 trainer/epoch: 277.0 val/loss: 1.807 test/loss: 2.036 train/loss: 1.277 
+Epoch 278/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 1.091 trainer/epoch: 278.0 val/loss: 1.785 test/loss: 1.958 train/loss: 1.248 
+Epoch 279/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 1.006 trainer/epoch: 279.0 val/loss: 1.775 test/loss: 1.974 train/loss: 1.218 
+Epoch 280/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 1.013 trainer/epoch: 280.0 val/loss: 1.869 test/loss: 1.973 train/loss: 1.285 
+Epoch 281/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.74it/s v_num: 0 trainer/loss: 1.38 trainer/epoch: 281.0 val/loss: 2.046 test/loss: 2.19 train/loss: 1.271 
+Epoch 282/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.368 trainer/epoch: 282.0 val/loss: 2.033 test/loss: 2.203 train/loss: 1.325 
+Epoch 283/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.077 trainer/epoch: 283.0 val/loss: 1.811 test/loss: 1.961 train/loss: 1.343 
+Epoch 284/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 1.268 trainer/epoch: 284.0 val/loss: 1.822 test/loss: 1.923 train/loss: 1.249 
+Epoch 285/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 1.415 trainer/epoch: 285.0 val/loss: 1.782 test/loss: 1.96 train/loss: 1.208 
+Epoch 286/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 1.048 trainer/epoch: 286.0 val/loss: 1.873 test/loss: 2.028 train/loss: 1.25 
+Epoch 287/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 1.118 trainer/epoch: 287.0 val/loss: 1.788 test/loss: 1.925 train/loss: 1.286 
+Epoch 288/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 0.914 trainer/epoch: 288.0 val/loss: 1.789 test/loss: 1.972 train/loss: 1.185 
+Epoch 289/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 1.481 trainer/epoch: 289.0 val/loss: 1.689 test/loss: 1.855 train/loss: 1.232 
+Epoch 290/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 1.004 trainer/epoch: 290.0 val/loss: 1.698 test/loss: 1.904 train/loss: 1.214 
+Epoch 291/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 1.099 trainer/epoch: 291.0 val/loss: 1.717 test/loss: 1.862 train/loss: 1.16 
+Epoch 292/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 1.131 trainer/epoch: 292.0 val/loss: 1.741 test/loss: 1.869 train/loss: 1.253 
+Epoch 293/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.74it/s v_num: 0 trainer/loss: 1.137 trainer/epoch: 293.0 val/loss: 1.772 test/loss: 1.947 train/loss: 1.17 
+Epoch 294/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 1.034 trainer/epoch: 294.0 val/loss: 1.68 test/loss: 1.874 train/loss: 1.202 
+Epoch 295/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 1.298 trainer/epoch: 295.0 val/loss: 1.794 test/loss: 1.903 train/loss: 1.173 
+Epoch 296/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.78 trainer/epoch: 296.0 val/loss: 1.74 test/loss: 1.916 train/loss: 1.19 
+Epoch 297/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 1.252 trainer/epoch: 297.0 val/loss: 1.688 test/loss: 1.869 train/loss: 1.214 
+Epoch 298/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 1.323 trainer/epoch: 298.0 val/loss: 1.789 test/loss: 1.954 train/loss: 1.265 
+Epoch 299/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 1.72 trainer/epoch: 299.0 val/loss: 1.722 test/loss: 1.852 train/loss: 1.189 
+Epoch 300/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 1.126 trainer/epoch: 300.0 val/loss: 1.744 test/loss: 1.926 train/loss: 1.178 
+Epoch 301/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 1.663 trainer/epoch: 301.0 val/loss: 1.859 test/loss: 2.057 train/loss: 1.239 
+Epoch 302/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 0.974 trainer/epoch: 302.0 val/loss: 1.753 test/loss: 1.876 train/loss: 1.23 
+Epoch 303/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 0.886 trainer/epoch: 303.0 val/loss: 1.728 test/loss: 1.907 train/loss: 1.211 
+Epoch 304/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 1.588 trainer/epoch: 304.0 val/loss: 1.657 test/loss: 1.776 train/loss: 1.179 
+Epoch 305/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 1.095 trainer/epoch: 305.0 val/loss: 1.778 test/loss: 1.981 train/loss: 1.16 
+Epoch 306/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.003 trainer/epoch: 306.0 val/loss: 1.705 test/loss: 1.853 train/loss: 1.198 
+Epoch 307/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.72it/s v_num: 0 trainer/loss: 1.019 trainer/epoch: 307.0 val/loss: 1.692 test/loss: 1.868 train/loss: 1.151 
+Epoch 308/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 0.947 trainer/epoch: 308.0 val/loss: 1.8 test/loss: 1.951 train/loss: 1.209 
+Epoch 309/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 1.166 trainer/epoch: 309.0 val/loss: 1.715 test/loss: 1.859 train/loss: 1.173 
+Epoch 310/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 1.096 trainer/epoch: 310.0 val/loss: 1.664 test/loss: 1.833 train/loss: 1.173 
+Epoch 311/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.333 trainer/epoch: 311.0 val/loss: 1.725 test/loss: 1.917 train/loss: 1.158 
+Epoch 312/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 1.207 trainer/epoch: 312.0 val/loss: 1.737 test/loss: 1.821 train/loss: 1.146 
+Epoch 313/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 1.156 trainer/epoch: 313.0 val/loss: 1.786 test/loss: 1.947 train/loss: 1.215 
+Epoch 314/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 1.137 trainer/epoch: 314.0 val/loss: 1.722 test/loss: 1.863 train/loss: 1.173 
+Epoch 315/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 0.974 trainer/epoch: 315.0 val/loss: 1.778 test/loss: 1.965 train/loss: 1.185 
+Epoch 316/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 0.89 trainer/epoch: 316.0 val/loss: 1.693 test/loss: 1.852 train/loss: 1.139 
+Epoch 317/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 1.185 trainer/epoch: 317.0 val/loss: 1.675 test/loss: 1.848 train/loss: 1.127 
+Epoch 318/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 0.866 trainer/epoch: 318.0 val/loss: 1.688 test/loss: 1.868 train/loss: 1.105 
+Epoch 319/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 1.074 trainer/epoch: 319.0 val/loss: 1.697 test/loss: 1.835 train/loss: 1.152 
+Epoch 320/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 1.02 trainer/epoch: 320.0 val/loss: 1.688 test/loss: 1.837 train/loss: 1.137 
+Epoch 321/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.71it/s v_num: 0 trainer/loss: 0.972 trainer/epoch: 321.0 val/loss: 1.712 test/loss: 1.797 train/loss: 1.129 
+Epoch 322/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 1.259 trainer/epoch: 322.0 val/loss: 1.634 test/loss: 1.783 train/loss: 1.165 
+Epoch 323/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 1.29 trainer/epoch: 323.0 val/loss: 1.79 test/loss: 1.923 train/loss: 1.162 
+Epoch 324/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 1.275 trainer/epoch: 324.0 val/loss: 1.621 test/loss: 1.772 train/loss: 1.174 
+Epoch 325/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 1.025 trainer/epoch: 325.0 val/loss: 1.591 test/loss: 1.779 train/loss: 1.12 
+Epoch 326/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.019 trainer/epoch: 326.0 val/loss: 1.698 test/loss: 1.808 train/loss: 1.263 
+Epoch 327/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 1.072 trainer/epoch: 327.0 val/loss: 1.824 test/loss: 2.045 train/loss: 1.151 
+Epoch 328/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.92 trainer/epoch: 328.0 val/loss: 1.744 test/loss: 1.873 train/loss: 1.179 
+Epoch 329/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 1.202 trainer/epoch: 329.0 val/loss: 1.657 test/loss: 1.853 train/loss: 1.139 
+Epoch 330/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 1.567 trainer/epoch: 330.0 val/loss: 1.653 test/loss: 1.866 train/loss: 1.181 
+Epoch 331/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.76it/s v_num: 0 trainer/loss: 0.993 trainer/epoch: 331.0 val/loss: 1.693 test/loss: 1.788 train/loss: 1.278 
+Epoch 332/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 0.761 trainer/epoch: 332.0 val/loss: 1.673 test/loss: 1.853 train/loss: 1.132 
+Epoch 333/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.73it/s v_num: 0 trainer/loss: 1.691 trainer/epoch: 333.0 val/loss: 1.603 test/loss: 1.782 train/loss: 1.06 
+Epoch 334/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.921 trainer/epoch: 334.0 val/loss: 1.647 test/loss: 1.733 train/loss: 1.106 
+Epoch 335/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.802 trainer/epoch: 335.0 val/loss: 1.658 test/loss: 1.819 train/loss: 1.185 
+Epoch 336/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.67it/s v_num: 0 trainer/loss: 1.029 trainer/epoch: 336.0 val/loss: 1.66 test/loss: 1.759 train/loss: 1.128 
+Epoch 337/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 1.232 trainer/epoch: 337.0 val/loss: 1.613 test/loss: 1.805 train/loss: 1.074 
+Epoch 338/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.67it/s v_num: 0 trainer/loss: 0.98 trainer/epoch: 338.0 val/loss: 1.608 test/loss: 1.755 train/loss: 1.088 
+Epoch 339/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.296 trainer/epoch: 339.0 val/loss: 1.674 test/loss: 1.777 train/loss: 1.084 
+Epoch 340/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 1.176 trainer/epoch: 340.0 val/loss: 1.607 test/loss: 1.784 train/loss: 1.123 
+Epoch 341/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 1.008 trainer/epoch: 341.0 val/loss: 1.557 test/loss: 1.712 train/loss: 1.099 
+Epoch 342/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.072 trainer/epoch: 342.0 val/loss: 1.63 test/loss: 1.798 train/loss: 1.099 
+Epoch 343/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 1.064 trainer/epoch: 343.0 val/loss: 1.874 test/loss: 1.987 train/loss: 1.109 
+Epoch 344/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 1.644 trainer/epoch: 344.0 val/loss: 1.819 test/loss: 1.916 train/loss: 1.193 
+Epoch 345/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.264 trainer/epoch: 345.0 val/loss: 1.615 test/loss: 1.801 train/loss: 1.202 
+Epoch 346/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 1.132 trainer/epoch: 346.0 val/loss: 1.696 test/loss: 1.768 train/loss: 1.126 
+Epoch 347/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 0.919 trainer/epoch: 347.0 val/loss: 1.593 test/loss: 1.751 train/loss: 1.107 
+Epoch 348/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.70it/s v_num: 0 trainer/loss: 0.871 trainer/epoch: 348.0 val/loss: 1.564 test/loss: 1.742 train/loss: 1.083 
+Epoch 349/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.22 trainer/epoch: 349.0 val/loss: 1.714 test/loss: 1.81 train/loss: 1.147 
+Epoch 350/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 0.806 trainer/epoch: 350.0 val/loss: 1.599 test/loss: 1.751 train/loss: 1.093 
+Epoch 351/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 0.901 trainer/epoch: 351.0 val/loss: 1.582 test/loss: 1.736 train/loss: 1.112 
+Epoch 352/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 1.188 trainer/epoch: 352.0 val/loss: 1.59 test/loss: 1.735 train/loss: 1.065 
+Epoch 353/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.74it/s v_num: 0 trainer/loss: 0.996 trainer/epoch: 353.0 val/loss: 1.627 test/loss: 1.816 train/loss: 1.072 
+Epoch 354/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.859 trainer/epoch: 354.0 val/loss: 1.73 test/loss: 1.914 train/loss: 1.114 
+Epoch 355/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.469 trainer/epoch: 355.0 val/loss: 1.548 test/loss: 1.744 train/loss: 1.087 
+Epoch 356/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 0.969 trainer/epoch: 356.0 val/loss: 1.582 test/loss: 1.784 train/loss: 1.078 
+Epoch 357/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.04it/s v_num: 0 trainer/loss: 0.934 trainer/epoch: 357.0 val/loss: 1.572 test/loss: 1.773 train/loss: 1.102 
+Epoch 358/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 1.075 trainer/epoch: 358.0 val/loss: 1.649 test/loss: 1.786 train/loss: 1.13 
+Epoch 359/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 1.356 trainer/epoch: 359.0 val/loss: 1.568 test/loss: 1.721 train/loss: 1.101 
+Epoch 360/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 0.987 trainer/epoch: 360.0 val/loss: 1.688 test/loss: 1.845 train/loss: 1.061 
+Epoch 361/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 1.199 trainer/epoch: 361.0 val/loss: 1.611 test/loss: 1.777 train/loss: 1.15 
+Epoch 362/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.02it/s v_num: 0 trainer/loss: 1.25 trainer/epoch: 362.0 val/loss: 1.725 test/loss: 1.895 train/loss: 1.061 
+Epoch 363/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 0.936 trainer/epoch: 363.0 val/loss: 1.631 test/loss: 1.819 train/loss: 1.124 
+Epoch 364/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.00it/s v_num: 0 trainer/loss: 0.877 trainer/epoch: 364.0 val/loss: 1.551 test/loss: 1.682 train/loss: 1.069 
+Epoch 365/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.00it/s v_num: 0 trainer/loss: 0.865 trainer/epoch: 365.0 val/loss: 1.579 test/loss: 1.73 train/loss: 1.046 
+Epoch 366/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.42it/s v_num: 0 trainer/loss: 1.447 trainer/epoch: 366.0 val/loss: 1.543 test/loss: 1.707 train/loss: 1.021 
+Epoch 367/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 1.056 trainer/epoch: 367.0 val/loss: 1.677 test/loss: 1.809 train/loss: 1.092 
+Epoch 368/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.011 trainer/epoch: 368.0 val/loss: 1.607 test/loss: 1.744 train/loss: 1.178 
+Epoch 369/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 0.849 trainer/epoch: 369.0 val/loss: 1.913 test/loss: 1.927 train/loss: 1.147 
+Epoch 370/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 1.032 trainer/epoch: 370.0 val/loss: 1.671 test/loss: 1.828 train/loss: 1.172 
+Epoch 371/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 1.813 trainer/epoch: 371.0 val/loss: 1.659 test/loss: 1.754 train/loss: 1.231 
+Epoch 372/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.00it/s v_num: 0 trainer/loss: 1.141 trainer/epoch: 372.0 val/loss: 1.647 test/loss: 1.822 train/loss: 1.078 
+Epoch 373/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 1.376 trainer/epoch: 373.0 val/loss: 1.67 test/loss: 1.848 train/loss: 1.123 
+Epoch 374/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 1.131 trainer/epoch: 374.0 val/loss: 1.608 test/loss: 1.696 train/loss: 1.151 
+Epoch 375/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 1.109 trainer/epoch: 375.0 val/loss: 1.663 test/loss: 1.745 train/loss: 1.065 
+Epoch 376/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 1.087 trainer/epoch: 376.0 val/loss: 1.599 test/loss: 1.719 train/loss: 1.089 
+Epoch 377/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 0.978 trainer/epoch: 377.0 val/loss: 1.617 test/loss: 1.736 train/loss: 1.127 
+Epoch 378/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 1.556 trainer/epoch: 378.0 val/loss: 1.703 test/loss: 1.832 train/loss: 1.069 
+Epoch 379/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 1.077 trainer/epoch: 379.0 val/loss: 1.526 test/loss: 1.653 train/loss: 1.076 
+Epoch 380/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 1.156 trainer/epoch: 380.0 val/loss: 1.565 test/loss: 1.73 train/loss: 1.092 
+Epoch 381/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 0.981 trainer/epoch: 381.0 val/loss: 1.642 test/loss: 1.706 train/loss: 1.078 
+Epoch 382/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 1.164 trainer/epoch: 382.0 val/loss: 1.547 test/loss: 1.726 train/loss: 1.062 
+Epoch 383/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 1.067 trainer/epoch: 383.0 val/loss: 1.563 test/loss: 1.725 train/loss: 1.04 
+Epoch 384/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 1.395 trainer/epoch: 384.0 val/loss: 1.521 test/loss: 1.631 train/loss: 1.039 
+Epoch 385/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 1.445 trainer/epoch: 385.0 val/loss: 1.72 test/loss: 1.828 train/loss: 1.066 
+Epoch 386/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 0.82 trainer/epoch: 386.0 val/loss: 1.731 test/loss: 1.895 train/loss: 1.143 
+Epoch 387/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.251 trainer/epoch: 387.0 val/loss: 1.594 test/loss: 1.834 train/loss: 1.146 
+Epoch 388/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 1.253 trainer/epoch: 388.0 val/loss: 1.546 test/loss: 1.734 train/loss: 1.121 
+Epoch 389/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 1.172 trainer/epoch: 389.0 val/loss: 1.651 test/loss: 1.761 train/loss: 1.02 
+Epoch 390/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 1.022 trainer/epoch: 390.0 val/loss: 1.668 test/loss: 1.77 train/loss: 1.076 
+Epoch 391/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 0.758 trainer/epoch: 391.0 val/loss: 1.584 test/loss: 1.694 train/loss: 1.073 
+Epoch 392/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.02it/s v_num: 0 trainer/loss: 0.873 trainer/epoch: 392.0 val/loss: 1.565 test/loss: 1.687 train/loss: 1.041 
+Epoch 393/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 0.982 trainer/epoch: 393.0 val/loss: 1.604 test/loss: 1.664 train/loss: 1.05 
+Epoch 394/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.03it/s v_num: 0 trainer/loss: 0.974 trainer/epoch: 394.0 val/loss: 1.635 test/loss: 1.705 train/loss: 1.141 
+Epoch 395/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 1.596 trainer/epoch: 395.0 val/loss: 1.559 test/loss: 1.709 train/loss: 1.044 
+Epoch 396/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 1.069 trainer/epoch: 396.0 val/loss: 1.574 test/loss: 1.678 train/loss: 1.1 
+Epoch 397/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 0.674 trainer/epoch: 397.0 val/loss: 1.526 test/loss: 1.738 train/loss: 1.037 
+Epoch 398/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 0.928 trainer/epoch: 398.0 val/loss: 1.497 test/loss: 1.622 train/loss: 1.028 
+Epoch 399/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 1.078 trainer/epoch: 399.0 val/loss: 1.63 test/loss: 1.763 train/loss: 1.075 
+Epoch 400/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 0.879 trainer/epoch: 400.0 val/loss: 1.587 test/loss: 1.6 train/loss: 1.034 
+Epoch 401/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 0.907 trainer/epoch: 401.0 val/loss: 1.522 test/loss: 1.679 train/loss: 1.053 
+Epoch 402/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 0.886 trainer/epoch: 402.0 val/loss: 1.539 test/loss: 1.72 train/loss: 1.017 
+Epoch 403/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 0.797 trainer/epoch: 403.0 val/loss: 1.516 test/loss: 1.64 train/loss: 1.025 
+Epoch 404/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 0.97 trainer/epoch: 404.0 val/loss: 1.518 test/loss: 1.671 train/loss: 0.961 
+Epoch 405/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 0.638 trainer/epoch: 405.0 val/loss: 1.458 test/loss: 1.641 train/loss: 1.048 
+Epoch 406/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.77it/s v_num: 0 trainer/loss: 1.174 trainer/epoch: 406.0 val/loss: 1.508 test/loss: 1.691 train/loss: 1.032 
+Epoch 407/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 0.812 trainer/epoch: 407.0 val/loss: 1.541 test/loss: 1.645 train/loss: 1.013 
+Epoch 408/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.813 trainer/epoch: 408.0 val/loss: 1.485 test/loss: 1.643 train/loss: 1.005 
+Epoch 409/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 0.92 trainer/epoch: 409.0 val/loss: 1.623 test/loss: 1.704 train/loss: 1.024 
+Epoch 410/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 0.858 trainer/epoch: 410.0 val/loss: 1.601 test/loss: 1.715 train/loss: 0.993 
+Epoch 411/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 1.017 trainer/epoch: 411.0 val/loss: 1.551 test/loss: 1.686 train/loss: 1.056 
+Epoch 412/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 0.948 trainer/epoch: 412.0 val/loss: 1.568 test/loss: 1.668 train/loss: 1.023 
+Epoch 413/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.887 trainer/epoch: 413.0 val/loss: 1.482 test/loss: 1.568 train/loss: 0.995 
+Epoch 414/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 0.7 trainer/epoch: 414.0 val/loss: 1.554 test/loss: 1.668 train/loss: 1.031 
+Epoch 415/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.03it/s v_num: 0 trainer/loss: 1.401 trainer/epoch: 415.0 val/loss: 1.554 test/loss: 1.664 train/loss: 1.075 
+Epoch 416/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 0.995 trainer/epoch: 416.0 val/loss: 1.608 test/loss: 1.744 train/loss: 1.075 
+Epoch 417/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 0.864 trainer/epoch: 417.0 val/loss: 1.58 test/loss: 1.746 train/loss: 1.056 
+Epoch 418/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 0.832 trainer/epoch: 418.0 val/loss: 1.506 test/loss: 1.612 train/loss: 1.005 
+Epoch 419/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 1.22 trainer/epoch: 419.0 val/loss: 1.505 test/loss: 1.646 train/loss: 0.985 
+Epoch 420/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 0.916 trainer/epoch: 420.0 val/loss: 1.508 test/loss: 1.608 train/loss: 0.974 
+Epoch 421/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 0.891 trainer/epoch: 421.0 val/loss: 1.57 test/loss: 1.79 train/loss: 1.058 
+Epoch 422/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 1.413 trainer/epoch: 422.0 val/loss: 1.553 test/loss: 1.622 train/loss: 1.11 
+Epoch 423/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 1.194 trainer/epoch: 423.0 val/loss: 1.509 test/loss: 1.603 train/loss: 0.973 
+Epoch 424/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 0.795 trainer/epoch: 424.0 val/loss: 1.515 test/loss: 1.661 train/loss: 0.978 
+Epoch 425/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 1.476 trainer/epoch: 425.0 val/loss: 1.576 test/loss: 1.664 train/loss: 1.022 
+Epoch 426/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 0.813 trainer/epoch: 426.0 val/loss: 1.471 test/loss: 1.58 train/loss: 1.008 
+Epoch 427/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 0.54 trainer/epoch: 427.0 val/loss: 1.336 test/loss: 1.442 train/loss: 0.808 
+Epoch 428/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 0.582 trainer/epoch: 428.0 val/loss: 1.3 test/loss: 1.404 train/loss: 0.664 
+Epoch 429/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.89it/s v_num: 0 trainer/loss: 0.564 trainer/epoch: 429.0 val/loss: 1.282 test/loss: 1.395 train/loss: 0.631 
+Epoch 430/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 1.124 trainer/epoch: 430.0 val/loss: 1.285 test/loss: 1.392 train/loss: 0.616 
+Epoch 431/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.661 trainer/epoch: 431.0 val/loss: 1.265 test/loss: 1.387 train/loss: 0.608 
+Epoch 432/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 0.429 trainer/epoch: 432.0 val/loss: 1.271 test/loss: 1.387 train/loss: 0.604 
+Epoch 433/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.85it/s v_num: 0 trainer/loss: 0.54 trainer/epoch: 433.0 val/loss: 1.255 test/loss: 1.386 train/loss: 0.613 
+Epoch 434/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 0.628 trainer/epoch: 434.0 val/loss: 1.262 test/loss: 1.377 train/loss: 0.605 
+Epoch 435/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 0.621 trainer/epoch: 435.0 val/loss: 1.251 test/loss: 1.384 train/loss: 0.598 
+Epoch 436/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 0.662 trainer/epoch: 436.0 val/loss: 1.253 test/loss: 1.381 train/loss: 0.605 
+Epoch 437/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 0.482 trainer/epoch: 437.0 val/loss: 1.258 test/loss: 1.381 train/loss: 0.606 
+Epoch 438/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 0.795 trainer/epoch: 438.0 val/loss: 1.251 test/loss: 1.388 train/loss: 0.597 
+Epoch 439/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 0.449 trainer/epoch: 439.0 val/loss: 1.253 test/loss: 1.375 train/loss: 0.594 
+Epoch 440/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 0.419 trainer/epoch: 440.0 val/loss: 1.249 test/loss: 1.376 train/loss: 0.591 
+Epoch 441/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 0.385 trainer/epoch: 441.0 val/loss: 1.239 test/loss: 1.363 train/loss: 0.599 
+Epoch 442/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 0.432 trainer/epoch: 442.0 val/loss: 1.245 test/loss: 1.375 train/loss: 0.588 
+Epoch 443/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 1.036 trainer/epoch: 443.0 val/loss: 1.244 test/loss: 1.373 train/loss: 0.597 
+Epoch 444/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 0.442 trainer/epoch: 444.0 val/loss: 1.238 test/loss: 1.366 train/loss: 0.599 
+Epoch 445/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 0.88 trainer/epoch: 445.0 val/loss: 1.232 test/loss: 1.36 train/loss: 0.596 
+Epoch 446/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 0.598 trainer/epoch: 446.0 val/loss: 1.225 test/loss: 1.369 train/loss: 0.592 
+Epoch 447/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 0.733 trainer/epoch: 447.0 val/loss: 1.233 test/loss: 1.363 train/loss: 0.591 
+Epoch 448/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.827 trainer/epoch: 448.0 val/loss: 1.233 test/loss: 1.36 train/loss: 0.585 
+Epoch 449/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 0.511 trainer/epoch: 449.0 val/loss: 1.225 test/loss: 1.347 train/loss: 0.586 
+Epoch 450/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 0.77 trainer/epoch: 450.0 val/loss: 1.235 test/loss: 1.372 train/loss: 0.588 
+Epoch 451/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 0.442 trainer/epoch: 451.0 val/loss: 1.229 test/loss: 1.356 train/loss: 0.6 
+Epoch 452/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 0.706 trainer/epoch: 452.0 val/loss: 1.219 test/loss: 1.362 train/loss: 0.588 
+Epoch 453/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 0.436 trainer/epoch: 453.0 val/loss: 1.233 test/loss: 1.357 train/loss: 0.588 
+Epoch 454/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 0.676 trainer/epoch: 454.0 val/loss: 1.232 test/loss: 1.362 train/loss: 0.589 
+Epoch 455/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 0.464 trainer/epoch: 455.0 val/loss: 1.222 test/loss: 1.354 train/loss: 0.587 
+Epoch 456/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 0.629 trainer/epoch: 456.0 val/loss: 1.23 test/loss: 1.359 train/loss: 0.59 
+Epoch 457/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 0.364 trainer/epoch: 457.0 val/loss: 1.232 test/loss: 1.36 train/loss: 0.606 
+Epoch 458/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 0.608 trainer/epoch: 458.0 val/loss: 1.222 test/loss: 1.347 train/loss: 0.596 
+Epoch 459/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 0.432 trainer/epoch: 459.0 val/loss: 1.224 test/loss: 1.347 train/loss: 0.598 
+Epoch 460/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 0.367 trainer/epoch: 460.0 val/loss: 1.22 test/loss: 1.344 train/loss: 0.581 
+Epoch 461/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 0.55 trainer/epoch: 461.0 val/loss: 1.223 test/loss: 1.35 train/loss: 0.573 
+Epoch 462/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 0.802 trainer/epoch: 462.0 val/loss: 1.224 test/loss: 1.344 train/loss: 0.584 
+Epoch 463/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 0.424 trainer/epoch: 463.0 val/loss: 1.214 test/loss: 1.334 train/loss: 0.583 
+Epoch 464/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 0.436 trainer/epoch: 464.0 val/loss: 1.212 test/loss: 1.326 train/loss: 0.578 
+Epoch 465/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 0.372 trainer/epoch: 465.0 val/loss: 1.229 test/loss: 1.35 train/loss: 0.583 
+Epoch 466/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 1.006 trainer/epoch: 466.0 val/loss: 1.213 test/loss: 1.346 train/loss: 0.582 
+Epoch 467/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.94it/s v_num: 0 trainer/loss: 0.772 trainer/epoch: 467.0 val/loss: 1.219 test/loss: 1.332 train/loss: 0.577 
+Epoch 468/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.78it/s v_num: 0 trainer/loss: 0.505 trainer/epoch: 468.0 val/loss: 1.22 test/loss: 1.33 train/loss: 0.577 
+Epoch 469/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.98it/s v_num: 0 trainer/loss: 0.336 trainer/epoch: 469.0 val/loss: 1.193 test/loss: 1.327 train/loss: 0.579 
+Epoch 470/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.93it/s v_num: 0 trainer/loss: 0.78 trainer/epoch: 470.0 val/loss: 1.222 test/loss: 1.335 train/loss: 0.576 
+Epoch 471/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.86it/s v_num: 0 trainer/loss: 0.369 trainer/epoch: 471.0 val/loss: 1.203 test/loss: 1.319 train/loss: 0.577 
+Epoch 472/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.92it/s v_num: 0 trainer/loss: 0.698 trainer/epoch: 472.0 val/loss: 1.203 test/loss: 1.34 train/loss: 0.575 
+Epoch 473/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.90it/s v_num: 0 trainer/loss: 1.053 trainer/epoch: 473.0 val/loss: 1.208 test/loss: 1.316 train/loss: 0.579 
+Epoch 474/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 0.386 trainer/epoch: 474.0 val/loss: 1.207 test/loss: 1.323 train/loss: 0.571 
+Epoch 475/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 0.63 trainer/epoch: 475.0 val/loss: 1.222 test/loss: 1.317 train/loss: 0.587 
+Epoch 476/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 0.496 trainer/epoch: 476.0 val/loss: 1.205 test/loss: 1.321 train/loss: 0.57 
+Epoch 477/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 0.566 trainer/epoch: 477.0 val/loss: 1.206 test/loss: 1.311 train/loss: 0.567 
+Epoch 478/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.87it/s v_num: 0 trainer/loss: 0.84 trainer/epoch: 478.0 val/loss: 1.215 test/loss: 1.334 train/loss: 0.583 
+Epoch 479/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.442 trainer/epoch: 479.0 val/loss: 1.205 test/loss: 1.315 train/loss: 0.593 
+Epoch 480/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.91it/s v_num: 0 trainer/loss: 0.553 trainer/epoch: 480.0 val/loss: 1.197 test/loss: 1.324 train/loss: 0.584 
+Epoch 481/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 0.802 trainer/epoch: 481.0 val/loss: 1.201 test/loss: 1.326 train/loss: 0.569 
+Epoch 482/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 0.912 trainer/epoch: 482.0 val/loss: 1.195 test/loss: 1.323 train/loss: 0.563 
+Epoch 483/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.79it/s v_num: 0 trainer/loss: 0.505 trainer/epoch: 483.0 val/loss: 1.213 test/loss: 1.316 train/loss: 0.578 
+Epoch 484/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 0.369 trainer/epoch: 484.0 val/loss: 1.202 test/loss: 1.319 train/loss: 0.569 
+Epoch 485/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 0.524 trainer/epoch: 485.0 val/loss: 1.196 test/loss: 1.319 train/loss: 0.577 
+Epoch 486/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.431 trainer/epoch: 486.0 val/loss: 1.212 test/loss: 1.337 train/loss: 0.57 
+Epoch 487/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 21.03it/s v_num: 0 trainer/loss: 0.437 trainer/epoch: 487.0 val/loss: 1.216 test/loss: 1.321 train/loss: 0.567 
+Epoch 488/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.80it/s v_num: 0 trainer/loss: 0.409 trainer/epoch: 488.0 val/loss: 1.225 test/loss: 1.331 train/loss: 0.571 
+Epoch 489/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.88it/s v_num: 0 trainer/loss: 0.434 trainer/epoch: 489.0 val/loss: 1.192 test/loss: 1.302 train/loss: 0.58 
+Epoch 490/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 1.133 trainer/epoch: 490.0 val/loss: 1.205 test/loss: 1.301 train/loss: 0.562 
+Epoch 491/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.81it/s v_num: 0 trainer/loss: 0.708 trainer/epoch: 491.0 val/loss: 1.218 test/loss: 1.33 train/loss: 0.573 
+Epoch 492/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.96it/s v_num: 0 trainer/loss: 0.835 trainer/epoch: 492.0 val/loss: 1.203 test/loss: 1.296 train/loss: 0.564 
+Epoch 493/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.75it/s v_num: 0 trainer/loss: 0.451 trainer/epoch: 493.0 val/loss: 1.19 test/loss: 1.302 train/loss: 0.562 
+Epoch 494/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.84it/s v_num: 0 trainer/loss: 0.445 trainer/epoch: 494.0 val/loss: 1.221 test/loss: 1.309 train/loss: 0.569 
+Epoch 495/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.95it/s v_num: 0 trainer/loss: 0.641 trainer/epoch: 495.0 val/loss: 1.21 test/loss: 1.303 train/loss: 0.572 
+Epoch 496/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.82it/s v_num: 0 trainer/loss: 0.704 trainer/epoch: 496.0 val/loss: 1.188 test/loss: 1.301 train/loss: 0.555 
+Epoch 497/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.99it/s v_num: 0 trainer/loss: 1.056 trainer/epoch: 497.0 val/loss: 1.199 test/loss: 1.303 train/loss: 0.57 
+Epoch 498/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.83it/s v_num: 0 trainer/loss: 1.017 trainer/epoch: 498.0 val/loss: 1.188 test/loss: 1.292 train/loss: 0.561 
+Epoch 499/499 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66/66 0:00:03 • 0:00:00 20.97it/s v_num: 0 trainer/loss: 0.46 trainer/epoch: 499.0 val/loss: 1.192 test/loss: 1.3 train/loss: 0.558 
